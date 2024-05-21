@@ -9,17 +9,18 @@ local function diff_source()
   end
 end
 
+local git_mode = require('plugins.git-mode')
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'onedark',
---    component_separators = { left = '', right = ''},
---    section_separators = { left = '', right = ''},
- 		component_separators = { left = ' ', right = ' '},
+    component_separators = { left = ' ', right = ' '},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
       statusline = {},
       winbar = {},
+			'NvimTree',
     },
     ignore_focus = {},
     always_divide_middle = true,
@@ -31,7 +32,15 @@ require('lualine').setup {
     }
   },
   sections = {
-    lualine_a = {'mode'},
+    lualine_a = {
+      'mode',
+      {
+        git_mode.get_git_mode_status,
+        color = function()
+          return git_mode.get_git_mode_color()
+        end,
+      }
+    },
     lualine_b = { {'b:gitsigns_head', icon = ''}, {'diff', source = diff_source} },
     lualine_c = {'filename'},
     lualine_x = {'encoding', 'fileformat', 'filetype'},

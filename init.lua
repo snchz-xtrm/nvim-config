@@ -8,6 +8,7 @@ require('keys.main')
 
 -- Plugins
 require('lazy-loader')
+require('plugins.git-mode')
 
 -- Theme
 require('onedark').load()

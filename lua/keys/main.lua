@@ -23,3 +23,29 @@ nm('<C-i>', ':NvimTreeToggle<CR>') -- Toggle Nvim Tree
 --nm('<C>hD', function() gitsigns.diffthis('~') end)
 --nm('<C>td', gitsigns.toggle_deleted)
 
+--nm('<C-s>', ':lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>', { noremap = true, silent = true })
+-- Функция для стадирования текущей строки
+
+-- Привязка комбинации клавиш <C-g> в нормальном режиме
+--nm('<C-g>', ':<C-u>lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>', { noremap = true, silent = true })
+
+-- Привязка комбинации клавиш <C-g>s в нормальном режиме
+--nm('<C-g>s', ':<C-u>lua StageCurrentLine()<CR>', { noremap = true, silent = true })
+
+
+
+
+-- Первый набор привязок для активации "режима гит"
+-- nm('<C-g>', ':lua GitModeToggle()<CR>', { noremap = true, silent = true })
+-- nm('s', ':lua GitStageHunk()<CR>', { noremap = true, silent = true })
+
+local git_mode = require('plugins.git-mode')
+
+-- Функция для создания привязок в нормальном режиме
+function nm(key, cmd, opts)
+  opts = opts or { noremap = true, silent = true }
+  vim.api.nvim_set_keymap('n', key, cmd, opts)
+end
+
+-- Привязка для переключения "режима гит"
+nm('<C-g>', ':lua require("plugins.git-mode").toggle_git_mode()<CR>')
